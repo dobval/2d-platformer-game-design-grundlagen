@@ -3,7 +3,28 @@ extends CharacterBody2D
 
 const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
+var spawn_position: Vector2 = Vector2(34, 429)
+var shielded: bool = false
+
 @onready var sprite_2d: AnimatedSprite2D = $Sprite2D
+
+func _ready() -> void:
+	spawn_position = global_position
+
+func activate_shield() -> void:
+	shielded = true
+	if not has_node("ShieldOrb"):
+		var orb: Sprite2D = Sprite2D.new()
+		orb.name = "ShieldOrb"
+		orb.texture = preload("res://shield.png")
+		orb.scale = Vector2(1.5, 1.5)
+		orb.modulate = Color(1.0, 1.0, 1.0, 0.5)
+		orb.z_index = 1
+		add_child(orb)
+	await get_tree().create_timer(3.0).timeout
+	shielded = false
+	if has_node("ShieldOrb"):
+		$ShieldOrb.queue_free()
 
 func _physics_process(delta: float) -> void:
 	# Animations

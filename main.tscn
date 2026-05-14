@@ -6,6 +6,10 @@
 [ext_resource type="Script" uid="uid://8yjjuyopbefj" path="res://scenes/main_character.gd" id="4_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://c76js3cpvrbyq" path="res://scenes/finish.tscn" id="5_lquwl"]
 [ext_resource type="Script" uid="uid://bm1mnkdem13o5" path="res://scenes/finish.gd" id="6_7mycd"]
+[ext_resource type="PackedScene" path="res://scenes/meteorite_spawner.tscn" id="7_xyz"]
+[ext_resource type="PackedScene" path="res://scenes/shield.tscn" id="8_shield"]
+[ext_resource type="AudioStream" uid="uid://c6xlxlr60m8yy" path="res://main_song.wav" id="10_4c57u"]
+[ext_resource type="PackedScene" path="res://scenes/music_player.tscn" id="10_music"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_h2yge"]
 texture = ExtResource("2_0xm2m")
@@ -181,6 +185,8 @@ physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_h2yge")
 
 [node name="Node" type="Node" unique_id=213754917]
+metadata/_edit_horizontal_guides_ = [555.0]
+metadata/_edit_vertical_guides_ = [590.0]
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1585690061]
 texture_filter = 1
@@ -215,5 +221,14 @@ limit_bottom = 650
 [node name="Finish" parent="." unique_id=1146598578 instance=ExtResource("5_lquwl")]
 position = Vector2(1016, 480)
 script = ExtResource("6_7mycd")
+
+[node name="MeteoriteSpawner" parent="." unique_id=121356266 instance=ExtResource("7_xyz")]
+
+[node name="Shield" parent="." unique_id=900000100 instance=ExtResource("8_shield")]
+
+[node name="MusicPlayer" parent="." unique_id=777777771 instance=ExtResource("10_music")]
+stream = ExtResource("10_4c57u")
+volume_db = -10.0
+script = null
 
 [connection signal="body_entered" from="Finish" to="Finish" method="_on_body_entered"]
