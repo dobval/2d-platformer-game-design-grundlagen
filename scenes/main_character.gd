@@ -5,6 +5,7 @@ const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
 var spawn_position: Vector2 = Vector2(34, 429)
 var shielded: bool = false
+var input_locked: bool = false
 
 @onready var sprite_2d: AnimatedSprite2D = $Sprite2D
 
@@ -38,18 +39,19 @@ func _physics_process(delta: float) -> void:
 		velocity += get_gravity() * delta
 		sprite_2d.animation = "jump"
 
-	# Handle jump.
-	if Input.is_action_just_pressed("jump") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
+	if not input_locked:
+		# Handle jump.
+		if Input.is_action_just_pressed("jump") and is_on_floor():
+			velocity.y = JUMP_VELOCITY
 
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
-	var direction := Input.get_axis("left", "right")
-	if direction:
-		velocity.x = direction * SPEED
-		sprite_2d.play("run")
-	else:
-		velocity.x = move_toward(velocity.x, 0, 24)
+		# Get the input direction and handle the movement/deceleration.
+		# As good practice, you should replace UI actions with custom gameplay actions.
+		var direction := Input.get_axis("left", "right")
+		if direction:
+			velocity.x = direction * SPEED
+			sprite_2d.play("run")
+		else:
+			velocity.x = move_toward(velocity.x, 0, 24)
 
 	move_and_slide()
 	
